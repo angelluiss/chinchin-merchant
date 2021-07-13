@@ -1,3 +1,5 @@
+import 'package:chinchin_merchant/login_registro/widgets/custom_toolbar_shape.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
