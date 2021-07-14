@@ -41,6 +41,13 @@ class CardDesign extends StatelessWidget {
             //       size: 300,
             //       styles: BlobStyles(color: primaryLightColor.withOpacity(0.2)),
             //     )),
+            Center(
+              child: Icon(
+                Icons.transfer_within_a_station,
+                color: Colors.black45,
+                size: size.width / 6,
+              ),
+            ),
             Positioned(
               top: 30,
               left: 30,
@@ -68,14 +75,14 @@ class CardDesign extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      "\$" + card.balance,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    )
+                    // Text(
+                    //   "\$" + card.balance,
+                    //   textAlign: TextAlign.start,
+                    //   style: TextStyle(
+                    //       color: Colors.black45,
+                    //       fontSize: 30,
+                    //       fontWeight: FontWeight.bold),
+                    // )
                   ],
                 ),
               ),

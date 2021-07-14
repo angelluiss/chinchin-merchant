@@ -306,15 +306,33 @@
 import 'package:chinchin_merchant/common/providers/dark_theme_provider.dart';
 import 'package:chinchin_merchant/common/style/theme_style.dart';
 import 'package:chinchin_merchant/common/widgets/keyboard_custom.dart';
+import 'package:chinchin_merchant/home/pages/home_screen.dart';
 import 'package:chinchin_merchant/login_registro/pages/login.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  TestKeyboard.register();
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      child: MyApp(),
+      path: 'assets/language',
+      supportedLocales: MyApp.list,
+      saveLocale: true,
+      useOnlyLangCode: true,
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
+  static const list = [
+    Locale('en'),
+    Locale('ar'),
+  ];
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -339,8 +357,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      onGenerateTitle: (context) => tr("app_name"),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-      home: LoginPage(),
+      home: ChangeNotifierProvider(
+        create: (_) => MenuProvider(),
+        child: HomeScreen(),
+      ),
     );
   }
 }

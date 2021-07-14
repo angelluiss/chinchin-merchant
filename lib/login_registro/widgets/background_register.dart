@@ -24,6 +24,13 @@ class BackgroundRegister extends StatelessWidget {
                   child: Column(
                 children: [
                   Container(child: Text("Chinchin")),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        child: Text(
+                      "V 1.0.0",
+                    )),
+                  ),
                 ],
               ))),
           Positioned(

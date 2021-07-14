@@ -1,178 +1,104 @@
+import 'package:chinchin_merchant/home/components/page_struture.dart';
+import 'package:chinchin_merchant/home/pages/home_page.dart';
+import 'package:chinchin_merchant/home/pages/menu_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
 
-// import 'package:flutter/material.dart';
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
-// import 'package:flutter_svg/flutter_svg.dart';
+  //Lista de items para traducciones
+  static List<MenuItem> mainMenu = [
+    MenuItem(tr("payment"), Icons.payment, 0),
+    MenuItem(tr("promos"), Icons.card_giftcard, 1),
+    MenuItem(tr("notifications"), Icons.notifications, 2),
+    MenuItem(tr("help"), Icons.help, 3),
+    MenuItem(tr("about_us"), Icons.info_outline, 4),
+  ];
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
-// class HomeScreen extends StatefulWidget {
-//   @override
-//   _HomeScreenState createState() => _HomeScreenState();
-// }
+class _HomeScreenState extends State<HomeScreen> {
+  final _drawerController = ZoomDrawerController();
 
-// class _HomeScreenState extends State<HomeScreen> {
-//   int _cardIndex = 1;
+  int _currentPage = 0;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     ScreenUtil.init(context, width: 375, height: 812, allowFontScaling: true);
+  @override
+  Widget build(BuildContext context) {
+    final isRtl = context.locale.languageCode == "es";
+    return ZoomDrawer(
+      controller: _drawerController,
+      style: DrawerStyle.Style1,
+      menuScreen: MenuScreen(
+        HomeScreen.mainMenu,
+        callback: _updatePage,
+        current: _currentPage,
+      ),
+      mainScreen: HomePage(),
+      borderRadius: 24.0,
+      showShadow: true,
+      angle: 0.0,
+      mainScreenScale: .1,
+      slideWidth: MediaQuery.of(context).size.width * (isRtl ? .55 : 0.65),
+      isRtl: isRtl,
+      clipMainScreen: false,
+      // openCurve: Curves.fastOutSlowIn,
+      // closeCurve: Curves.bounceIn,
+    );
+  }
 
-//     var header = Padding(
-//       padding: EdgeInsets.all(kSpacingUnit.w * 2),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: <Widget>[
-//           SvgPicture.asset('assets/icons/menu.svg'),
-//           InkWell(
-//             onTap: () => Navigator.push(
-//               context,
-//               PageTransition(
-//                 type: PageTransitionType.fade,
-//                 child: AccountScreen(),
-//               ),
-//             ),
-//             child: Container(
-//               height: kSpacingUnit.w * 4,
-//               width: kSpacingUnit.w * 4,
-//               decoration: BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: kShadowColor1,
-//                     blurRadius: kSpacingUnit * 2,
-//                     offset: Offset(0, kSpacingUnit.w),
-//                   ),
-//                 ],
-//                 image: DecorationImage(
-//                   image: AssetImage('assets/images/avatar.png'),
-//                 ),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
+  void _updatePage(index) {
+    // Provider.of<MenuProvider>(context, listen: false).updateCurrentPage(index);
+    _drawerController.toggle!();
+  }
+}
 
-//     var cardHeading = Padding(
-//       padding: EdgeInsets.symmetric(
-//         vertical: kSpacingUnit.w,
-//         horizontal: kSpacingUnit.w * 2,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: <Widget>[
-//           Text(
-//             'Cards',
-//             style: kHeadingTextStyle,
-//           ),
-//           Row(
-//             children: <Widget>[
-//               Text(
-//                 'Add New',
-//                 style: kBodyTextStyle,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w),
-//                 child: SvgPicture.asset('assets/icons/plus.svg'),
-//               ),
-//             ],
-//           )
-//         ],
-//       ),
-//     );
+//==========================
+// CLASE DESTINADA PARA PROVIDER DE PAGINACION EN CASO DE QUE SE HAGA
+//
+//==========================
+class MainScreen extends StatefulWidget {
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
 
-//     var cardCarousel = Stack(
-//       children: <Widget>[
-//         CarouselSlider.builder(
-//           options: CarouselOptions(
-//             height: 240.w,
-//             aspectRatio: 16 / 9,
-//             viewportFraction: 0.8,
-//             initialPage: _cardIndex,
-//             enlargeCenterPage: true,
-//             onPageChanged: (index, reason) {
-//               setState(() {
-//                 _cardIndex = index;
-//               });
-//             },
-//           ),
-//           itemCount: cardsMockData.length,
-//           itemBuilder: (BuildContext context, int index) =>
-//               BankCard(cardsMockData[index]),
-//         ),
-//         Positioned(
-//           bottom: kSpacingUnit.w * 2,
-//           left: 0,
-//           right: 0,
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: cardsMockData.map((card) {
-//               return Container(
-//                 width: kSpacingUnit.w,
-//                 height: kSpacingUnit.w,
-//                 margin: EdgeInsets.symmetric(horizontal: kSpacingUnit.w / 2),
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.circle,
-//                   color: cardsMockData[_cardIndex].number == card.number
-//                       ? kPrimaryColor
-//                       : Colors.transparent,
-//                   border: Border.all(
-//                     color: kPrimaryColor,
-//                     width: 1.5,
-//                   ),
-//                 ),
-//               );
-//             }).toList(),
-//           ),
-//         )
-//       ],
-//     );
+class _MainScreenState extends State<MainScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final rtl = ZoomDrawer.isRTL();
+    return ValueListenableBuilder<DrawerState>(
+      valueListenable: ZoomDrawer.of(context)!.stateNotifier!,
+      builder: (context, state, child) {
+        return AbsorbPointer(
+          absorbing: state != DrawerState.closed,
+          child: child,
+        );
+      },
+      child: GestureDetector(
+        child: PageStructure(),
+        onPanUpdate: (details) {
+          if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
+            ZoomDrawer.of(context)!.toggle();
+          }
+        },
+      ),
+    );
+  }
+}
 
-//     var transactionHeading = Padding(
-//       padding: EdgeInsets.symmetric(
-//         horizontal: kSpacingUnit.w * 2,
-//       ).copyWith(
-//         top: kSpacingUnit.w * 2,
-//         bottom: kSpacingUnit.w,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: <Widget>[
-//           Text(
-//             'Transactions',
-//             style: kHeadingTextStyle,
-//           ),
-//           SvgPicture.asset(
-//             'assets/icons/more.svg',
-//             color: kTextSecondaryColor,
-//           )
-//         ],
-//       ),
-//     );
+class MenuProvider extends ChangeNotifier {
+  int _currentPage = 0;
 
-//     var transactions = Expanded(
-//       child: ListView.builder(
-//         itemCount: transactionsMockData.length,
-//         itemBuilder: (BuildContext context, index) =>
-//             TransactionItem(transactionsMockData[index]),
-//       ),
-//     );
+  int get currentPage => _currentPage;
 
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: AppContent(
-//         child: SafeArea(
-//           bottom: false,
-//           child: Column(
-//             children: <Widget>[
-//               header,
-//               cardHeading,
-//               cardCarousel,
-//               transactionHeading,
-//               transactions,
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  void updateCurrentPage(int index) {
+    if (index != currentPage) {
+      _currentPage = index;
+      notifyListeners();
+    }
+  }
+}

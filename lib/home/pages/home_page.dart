@@ -1,9 +1,9 @@
 import 'package:chinchin_merchant/common/widgets/navigation_bar_type1.dart';
 import 'package:chinchin_merchant/home/widgets/card_list.dart';
-import 'package:chinchin_merchant/login_registro/widgets/custom_app_called.dart';
-import 'package:chinchin_merchant/utils/constants.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -16,23 +16,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: size.height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            _navigationBar(sizes: size),
-            _bottomNavigationBar(),
-            _homeWidget(),
-          ],
+    final rtl = ZoomDrawer.isRTL();
+    return ValueListenableBuilder<DrawerState>(
+      valueListenable: ZoomDrawer.of(context)!.stateNotifier!,
+      builder: (context, state, child) {
+        return AbsorbPointer(
+          absorbing: state != DrawerState.closed,
+          child: child,
+        );
+      },
+      child: GestureDetector(
+        child: Scaffold(
+          body: Container(
+            width: double.infinity,
+            height: size.height,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _navigationBar(sizes: size),
+                _bottomNavigationBar(),
+                _homeWidget(context),
+              ],
+            ),
+          ),
         ),
+        onPanUpdate: (details) {
+          if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
+            ZoomDrawer.of(context)!.toggle();
+          }
+        },
       ),
     );
   }
 
-  _homeWidget() {
+  _homeWidget(contextScafoll) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -40,6 +57,11 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(20.0),
           child: CardList(),
         ),
+        IconButton(
+            onPressed: () {
+              Scaffold.of(contextScafoll).openDrawer();
+            },
+            icon: Icon(Icons.present_to_all)),
         // Expanded(
         //   child: ListView.builder(
         //       // shrinkWrap: true,
@@ -91,6 +113,61 @@ class _HomePageState extends State<HomePage> {
               }),
         )
       ],
+    );
+  }
+
+  _drawer() {
+    // var vinculacionBloc = BlocProvider.of<VinculacionBloc>(context);
+    // var user = vinculacionBloc.users.first;
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    flex: 4,
+                    child: Container(
+                      child: Icon(Icons.account_circle, size: 70),
+                    )),
+                Expanded(
+                    child: Text(
+                  'Angel',
+                  style: TextStyle(fontSize: 12),
+                )),
+                Expanded(
+                    child: Text(
+                  "Última sesión ",
+                  style: TextStyle(fontSize: 12),
+                ))
+              ],
+            ),
+            decoration: BoxDecoration(),
+          ),
+          /*ListTile(
+            title: Text('Compartir mis datos'),
+            onTap: () {
+              _openQrData();
+            },
+          ),*/
+          ListTile(
+            title: Text('Configuración'),
+            onTap: () {
+              //Navegar a la página de configuraciones
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/config');
+            },
+          ),
+          ListTile(
+            title: Text('Salir'),
+            onTap: () {
+              // _showExitDialog();
+            },
+          ),
+        ],
+      ),
     );
   }
 

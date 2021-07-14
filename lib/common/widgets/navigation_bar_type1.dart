@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class CustomAppBar extends StatefulWidget {
   final Size size;
@@ -84,17 +86,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
       left: widget.size.width / 20,
       top: widget.size.height / 12,
       child: Container(
-        width: 20,
-        height: 20,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
         ),
-        child: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            )),
+        child: CupertinoButton(
+          child: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            print("Drawer Pressed");
+            // if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
+            ZoomDrawer.of(context)!.toggle();
+            // }
+          },
+        ),
       ),
     );
   }
