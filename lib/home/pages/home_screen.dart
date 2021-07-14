@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 //==========================
 // CLASE DESTINADA PARA PROVIDER DE PAGINACION EN CASO DE QUE SE HAGA
-//
+//  (Opcional)
 //==========================
 class MainScreen extends StatefulWidget {
   @override
