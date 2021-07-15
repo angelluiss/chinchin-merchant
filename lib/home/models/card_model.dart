@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CardData {
-  final String balance;
+  final String name;
   final String date;
   final String number;
   final Color color;
-  final String image;
+  final Icon image;
 
   CardData(
-      {required this.balance,
+      {required this.name,
       required this.date,
       required this.number,
       required this.color,
@@ -17,23 +17,23 @@ class CardData {
 
 List<CardData> cards = [
   CardData(
-      balance: '23,532',
+      name: 'Pago Móvil',
       date: '12/26',
       number: '5262',
       color: Colors.white,
-      image: "assets/mastercard.png"),
+      image: Icon(Icons.payment)),
   CardData(
-      balance: '48,632',
+      name: 'Chinchin',
       date: '01/23',
       number: '5737',
       color: Colors.white,
-      image: "assets/mastercard.png"),
+      image: Icon(Icons.smart_display_outlined)),
   CardData(
-      balance: '74,363',
+      name: 'Cierre de lote',
       date: '07/24',
       number: '6315',
       color: Colors.white,
-      image: "assets/mastercard.png")
+      image: Icon(Icons.local_activity))
 ];
 
 class LastInvestmentData {

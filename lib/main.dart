@@ -311,6 +311,7 @@ import 'package:chinchin_merchant/login_registro/pages/login.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -356,16 +357,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (context) => tr("app_name"),
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-      home: ChangeNotifierProvider(
-        create: (_) => MenuProvider(),
-        child: HomeScreen(),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        onGenerateTitle: (context) => tr("app_name"),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+        home: SplashScreenView(
+          navigateRoute: LoginPage(),
+          duration: 3000,
+          imageSize: 130,
+          imageSrc: "assets/images/logo_chinchin.png",
+          backgroundColor: Colors.white,
+        ));
   }
 }

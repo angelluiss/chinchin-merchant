@@ -1,5 +1,10 @@
+import 'package:chinchin_merchant/common/pages/comprobante.dart';
+import 'package:chinchin_merchant/common/widgets/bottom_sheet.dart';
 import 'package:chinchin_merchant/common/widgets/navigation_bar_type1.dart';
+import 'package:chinchin_merchant/home/models/card_model.dart';
+import 'package:chinchin_merchant/home/widgets/card_design.dart';
 import 'package:chinchin_merchant/home/widgets/card_list.dart';
+import 'package:chinchin_merchant/utils/constants.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,15 +32,15 @@ class _HomePageState extends State<HomePage> {
       },
       child: GestureDetector(
         child: Scaffold(
+          appBar: _appBarGreen(size),
+          bottomNavigationBar: _bottomNavigationBar(size),
           body: Container(
-            width: double.infinity,
+            color: backgroundColorLight,
             height: size.height,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                _navigationBar(sizes: size),
-                _bottomNavigationBar(),
-                _homeWidget(context),
+                _homeWidget(context, size),
               ],
             ),
           ),
@@ -49,144 +54,146 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _homeWidget(contextScafoll) {
+  _homeWidget(contextScafoll, Size size) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: CardList(),
+        Text("Funciones"),
+        Expanded(
+          flex: 1,
+          child: Container(
+            height: size.height / 8,
+            width: size.width,
+            child: ListView.builder(
+                // shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: cards.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      child: CardDesign(
+                        card: cards[index],
+                      ),
+                      onTap: () {
+                        print("Seleccionaste $index");
+                        // Navigator.of(context).push(route);
+                      },
+                    ),
+                  );
+                }),
+          ),
         ),
-        IconButton(
-            onPressed: () {
-              Scaffold.of(contextScafoll).openDrawer();
-            },
-            icon: Icon(Icons.present_to_all)),
-        // Expanded(
-        //   child: ListView.builder(
-        //       // shrinkWrap: true,
-        //       // scrollDirection: Axis.horizontal,
-        //       itemCount: 3,
-        //       itemBuilder: (context, index) {
-        //         return ListTile(
-        //           minLeadingWidth: 10,
-        //           title: Text("dasa"),
-        //         );
-        //       }),
-        // ),
-        // ListView.builder(
-        //     scrollDirection: Axis.horizontal,
-        //     itemCount: 4,
-        //     itemBuilder: (context, index) {
-        //       return Card(
-        //         child: Icon(Icons.wallet_travel),
-        //       );
-        //     }),
-        Container(
-          width: double.infinity,
-          height: 300,
-          child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ListTile(
-                    onTap: () {},
-                    title: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                      ),
-                      width: MediaQuery.of(context).size.width - 50,
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.card_giftcard),
-                          Column(
-                            children: [
-                              Text("gadgad"),
-                            ],
-                          )
-                        ],
-                      ),
-                    ));
-              }),
+        Expanded(
+          flex: 2,
+          child: Container(
+            width: double.infinity,
+            height: size.height / 2,
+            child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ComprobantePage()));
+                      },
+                      title: Container(
+                        height: size.height / 6,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                        ),
+                        width: MediaQuery.of(context).size.width - 50,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                                top: 50,
+                                left: 10,
+                                child: Icon(Icons.card_giftcard)),
+                            Positioned(
+                              right: 0,
+                              bottom: 0,
+                              child: Text("gadgad"),
+                            )
+                          ],
+                        ),
+                      ));
+                }),
+          ),
         )
       ],
     );
   }
 
-  _drawer() {
-    // var vinculacionBloc = BlocProvider.of<VinculacionBloc>(context);
-    // var user = vinculacionBloc.users.first;
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    flex: 4,
-                    child: Container(
-                      child: Icon(Icons.account_circle, size: 70),
-                    )),
-                Expanded(
-                    child: Text(
-                  'Angel',
-                  style: TextStyle(fontSize: 12),
-                )),
-                Expanded(
-                    child: Text(
-                  "Última sesión ",
-                  style: TextStyle(fontSize: 12),
-                ))
-              ],
-            ),
-            decoration: BoxDecoration(),
-          ),
-          /*ListTile(
-            title: Text('Compartir mis datos'),
-            onTap: () {
-              _openQrData();
-            },
-          ),*/
-          ListTile(
-            title: Text('Configuración'),
-            onTap: () {
-              //Navegar a la página de configuraciones
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed('/config');
-            },
-          ),
-          ListTile(
-            title: Text('Salir'),
-            onTap: () {
-              // _showExitDialog();
-            },
+  _bottomNavigationBar(Size size) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(60))),
+      height: size.height / 12,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.home)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.history)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.card_giftcard)),
+            ],
           ),
         ],
       ),
     );
   }
 
-  _bottomNavigationBar() {
-    return Positioned(
-        bottom: 0,
-        child: Container(
-            child: Column(
-          children: [
-            Container(child: Text("Chinchin")),
-          ],
-        )));
-  }
-
-  _navigationBar({required Size sizes}) {
-    return Positioned(
-        top: 0,
-        child: CustomAppBar(
-          size: sizes,
-        ));
+  _appBarGreen(Size size) {
+    return AppBar(
+      leadingWidth: 220,
+      foregroundColor: primaryLightColor,
+      backgroundColor: primaryLightColor,
+      shape: ContinuousRectangleBorder(
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.circular(90.0),
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Hello, Moto Rocker",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                decorationStyle: TextDecorationStyle.dashed),
+          ),
+        )
+      ],
+      leading: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 10,
+            child: Container(
+              child: Image.asset(
+                'assets/images/chinchin_icon_white_with_opacity.png',
+                height: 40,
+                width: 40,
+              ),
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                // if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
+                ZoomDrawer.of(context)!.toggle();
+                // }
+              },
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ))
+        ],
+      ),
+    );
   }
 }

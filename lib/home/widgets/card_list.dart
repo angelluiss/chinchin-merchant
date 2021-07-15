@@ -9,8 +9,9 @@ class CardList extends StatelessWidget {
     // return CardDesign(
     //   card: cards[0],
     // );
+    Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: 40),
+      margin: EdgeInsets.only(top: size.width / 4),
       child: CarouselSlider.builder(
         itemCount: cards.length,
         itemBuilder: (BuildContext context, int i, int itemIndex) {
@@ -19,9 +20,11 @@ class CardList extends StatelessWidget {
           );
         },
         options: CarouselOptions(
+            disableCenter: true,
+            enlargeStrategy: CenterPageEnlargeStrategy.height,
             initialPage: 0,
             enableInfiniteScroll: false,
-            enlargeCenterPage: true),
+            enlargeCenterPage: false),
       ),
     );
   }

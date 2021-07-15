@@ -1,10 +1,10 @@
 import 'package:chinchin_merchant/home/components/page_struture.dart';
 import 'package:chinchin_merchant/home/pages/home_page.dart';
 import 'package:chinchin_merchant/home/pages/menu_screen.dart';
+import 'package:chinchin_merchant/login_registro/pages/login.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +17,8 @@ class HomeScreen extends StatefulWidget {
     MenuItem(tr("help"), Icons.help, 3),
     MenuItem(tr("about_us"), Icons.info_outline, 4),
   ];
+
+  static List<Widget> mainMenuWidgets = [HomePage(), LoginPage()];
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

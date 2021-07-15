@@ -43,6 +43,7 @@ dependencies:
   easy_localization: ^3.0.0
   flutter_platform_widgets: ^1.0.1-nullsafety.0
   flutter_zoom_drawer: ^2.0.2+4
+  splash_screen_view: ^3.0.0
 
 dev_dependencies:
   flutter_test:

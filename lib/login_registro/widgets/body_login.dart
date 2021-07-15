@@ -1,10 +1,12 @@
 import 'package:chinchin_merchant/common/widgets/rounded_text_field_container.dart';
 import 'package:chinchin_merchant/home/pages/home_page.dart';
+import 'package:chinchin_merchant/home/pages/home_screen.dart';
 import 'package:chinchin_merchant/login_registro/pages/registro.dart';
 import 'package:chinchin_merchant/login_registro/widgets/background_login.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -50,8 +52,12 @@ class _BodyState extends State<Body> {
               child: new CupertinoButton(
                   key: null,
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (_) => MenuProvider(),
+                        child: HomeScreen(),
+                      ),
+                    ));
                   },
                   color: primaryLightColor,
                   child: new Text(
