@@ -9,23 +9,23 @@ class CardList extends StatelessWidget {
     // return CardDesign(
     //   card: cards[0],
     // );
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.only(top: size.width / 4),
-      child: CarouselSlider.builder(
-        itemCount: cards.length,
-        itemBuilder: (BuildContext context, int i, int itemIndex) {
-          return CardDesign(
+
+    return CarouselSlider.builder(
+      itemCount: cards.length,
+      itemBuilder: (BuildContext context, int i, int itemIndex) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CardDesign(
             card: cards[itemIndex],
-          );
-        },
-        options: CarouselOptions(
-            disableCenter: true,
-            enlargeStrategy: CenterPageEnlargeStrategy.height,
-            initialPage: 0,
-            enableInfiniteScroll: false,
-            enlargeCenterPage: false),
-      ),
+          ),
+        );
+      },
+      options: CarouselOptions(
+          disableCenter: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.height,
+          initialPage: 0,
+          enableInfiniteScroll: false,
+          enlargeCenterPage: false),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:chinchin_merchant/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CircularPainterLeft extends StatelessWidget {
@@ -28,13 +29,13 @@ class _HeaderPaintDiagonal extends CustomPainter {
     canvas.drawPath(path, paint);
 
     final paintCircle = Paint()
-      ..color = Colors.red
+      ..color = primaryLightColor
       ..strokeWidth = 5
       ..style = PaintingStyle.fill;
 
     Offset center = Offset(size.width / 2, size.height * 0.35);
 
-    canvas.drawCircle(center, 50, paintCircle);
+    canvas.drawCircle(center, 80, paintCircle);
   }
 
   @override

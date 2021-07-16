@@ -108,7 +108,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       tr("logout"),
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18, color: Colors.black54),
                     ),
                   ),
                   style: OutlinedButton.styleFrom(

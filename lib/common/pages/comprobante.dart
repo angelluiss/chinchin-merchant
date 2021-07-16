@@ -27,7 +27,7 @@ class _ComprobantePageState extends State<ComprobantePage> {
             bottomRight: Radius.circular(80.0),
           ),
         ),
-        title: Text("Comprobante"),
+        title: Text("Datos de la orden"),
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();

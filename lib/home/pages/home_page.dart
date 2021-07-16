@@ -4,6 +4,8 @@ import 'package:chinchin_merchant/common/widgets/navigation_bar_type1.dart';
 import 'package:chinchin_merchant/home/models/card_model.dart';
 import 'package:chinchin_merchant/home/widgets/card_design.dart';
 import 'package:chinchin_merchant/home/widgets/card_list.dart';
+import 'package:chinchin_merchant/p2p/pages/pago_movil.dart';
+import 'package:chinchin_merchant/pago_chinchin/pages/pago_chinchin.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -37,12 +39,7 @@ class _HomePageState extends State<HomePage> {
           body: Container(
             color: backgroundColorLight,
             height: size.height,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                _homeWidget(context, size),
-              ],
-            ),
+            child: _homeWidget(context, size),
           ),
         ),
         onPanUpdate: (details) {
@@ -58,68 +55,108 @@ class _HomePageState extends State<HomePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Funciones"),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Funciones"),
+            )
+          ],
+        ),
+        // CardList(),
         Expanded(
           flex: 1,
-          child: Container(
-            height: size.height / 8,
-            width: size.width,
-            child: ListView.builder(
-                // shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: cards.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      child: CardDesign(
-                        card: cards[index],
-                      ),
-                      onTap: () {
-                        print("Seleccionaste $index");
-                        // Navigator.of(context).push(route);
-                      },
+          child: ListView.builder(
+              // shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: cards.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    child: CardDesign(
+                      card: cards[index],
                     ),
-                  );
-                }),
-          ),
+                    onTap: () {
+                      print("Seleccionaste $index");
+                      index == 0
+                          ? Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => PagoMovilPage()))
+                          : print("otro valor");
+                      index == 1
+                          ? Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => PagoChinchinPage()))
+                          : print("otro valor");
+
+                      // Navigator.of(context).push(route);
+                    },
+                  ),
+                );
+              }),
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Actividades Recientes"),
+            )
+          ],
         ),
         Expanded(
           flex: 2,
-          child: Container(
-            width: double.infinity,
-            height: size.height / 2,
-            child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ComprobantePage()));
-                      },
-                      title: Container(
+          child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ComprobantePage()));
+                    },
+                    title: Container(
                         height: size.height / 6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Colors.white,
+                          border: Border.all(color: primaryLightColor),
                         ),
                         width: MediaQuery.of(context).size.width - 50,
-                        child: Stack(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Positioned(
-                                top: 50,
-                                left: 10,
-                                child: Icon(Icons.card_giftcard)),
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: Text("gadgad"),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [Icon(Icons.transfer_within_a_station)],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "01254123541",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Orden de un posillo",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "\$15",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
+                                )
+                              ],
                             )
                           ],
-                        ),
-                      ));
-                }),
-          ),
+                        )));
+              }),
         )
       ],
     );
