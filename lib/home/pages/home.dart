@@ -1,5 +1,5 @@
-import 'package:chinchin_merchant/home/pages/drawerScreen.dart';
-import 'package:chinchin_merchant/home/pages/home_page.dart';
+import 'package:chinchin_merchant/home/screen/drawerScreen.dart';
+import 'package:chinchin_merchant/home/pages/pager_page_view.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,7 +14,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [DrawerScreen(), HomePage()],
+        children: [DrawerScreen(), PageViewver()],
       ),
     );
   }

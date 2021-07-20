@@ -1,6 +1,6 @@
 import 'package:chinchin_merchant/home/components/page_struture.dart';
 import 'package:chinchin_merchant/home/pages/home_page.dart';
-import 'package:chinchin_merchant/home/pages/menu_screen.dart';
+import 'package:chinchin_merchant/home/screen/menu_screen.dart';
 import 'package:chinchin_merchant/login_registro/pages/login.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

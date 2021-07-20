@@ -1,5 +1,6 @@
 import 'package:chinchin_merchant/common/pages/cobro_de_orden.dart';
 import 'package:chinchin_merchant/common/style/custom/circle_left_custom_paint.dart';
+import 'package:chinchin_merchant/common/widgets/app_bar/app_bar_white_green.dart';
 import 'package:chinchin_merchant/common/widgets/rounded_text_field_container.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,9 @@ class _PagoChinchinPageState extends State<PagoChinchinPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _appBarGreen(size),
+      appBar: AppBarWhiteGree(
+        size: size,
+      ),
       body: Container(
         color: backgroundColorLight,
         child: Center(
@@ -32,7 +35,7 @@ class _PagoChinchinPageState extends State<PagoChinchinPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 8, 8, 8),
-                      child: Text("Inntroduzca los datos",
+                      child: Text("Introduzca los datos",
                           style: TextStyle(color: Colors.black45)),
                     ),
                   ],
@@ -126,7 +129,7 @@ class _PagoChinchinPageState extends State<PagoChinchinPage> {
             bottomRight: Radius.circular(90.0),
           ),
         ),
-        title: Text("Orden Pago Movil"),
+        title: Text("Chinchin"),
         // actions: [Stack(child: Image.asset("assets/images/chinchin_icon_white.png"))],
         leading: IconButton(
             onPressed: () {

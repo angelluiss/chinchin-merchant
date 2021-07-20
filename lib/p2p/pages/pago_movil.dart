@@ -1,4 +1,5 @@
 import 'package:chinchin_merchant/common/style/custom/circle_left_custom_paint.dart';
+import 'package:chinchin_merchant/common/widgets/app_bar/app_bar_white_green.dart';
 import 'package:chinchin_merchant/common/widgets/rounded_text_field_container.dart';
 import 'package:chinchin_merchant/p2p/pages/cobro_chinchin_pago_mobil.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
@@ -17,7 +18,9 @@ class _PagoMovilPageState extends State<PagoMovilPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _appBarGreen(size),
+      appBar: AppBarWhiteGree(
+        size: size,
+      ),
       body: Container(
         color: backgroundColorLight,
         child: Center(
@@ -173,32 +176,5 @@ class _PagoMovilPageState extends State<PagoMovilPage> {
         ),
       ),
     );
-  }
-
-  _appBarGreen(Size size) {
-    return AppBar(
-        flexibleSpace: Stack(
-          children: [
-            Positioned(top: 20, right: 20, child: CircularPainterLeft()),
-            Positioned(
-                top: 50,
-                right: 20,
-                child: Image.asset("assets/images/chinchin_icon_white.png"))
-          ],
-        ),
-        foregroundColor: primaryLightColor,
-        backgroundColor: Colors.white,
-        shape: ContinuousRectangleBorder(
-          borderRadius: const BorderRadius.only(
-            bottomRight: Radius.circular(90.0),
-          ),
-        ),
-        title: Text("Orden Pago Movil"),
-        // actions: [Stack(child: Image.asset("assets/images/chinchin_icon_white.png"))],
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios)));
   }
 }

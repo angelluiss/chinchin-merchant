@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chinchin_merchant/home/pages/home_screen.dart';
+import 'package:chinchin_merchant/home/screen/home_screen.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,9 +1,8 @@
 import 'package:chinchin_merchant/common/pages/comprobante.dart';
-import 'package:chinchin_merchant/common/widgets/bottom_sheet.dart';
-import 'package:chinchin_merchant/common/widgets/navigation_bar_type1.dart';
+
 import 'package:chinchin_merchant/home/models/card_model.dart';
 import 'package:chinchin_merchant/home/widgets/card_design.dart';
-import 'package:chinchin_merchant/home/widgets/card_list.dart';
+
 import 'package:chinchin_merchant/p2p/pages/pago_movil.dart';
 import 'package:chinchin_merchant/pago_chinchin/pages/pago_chinchin.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
@@ -35,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       child: GestureDetector(
         child: Scaffold(
           appBar: _appBarGreen(size),
-          bottomNavigationBar: _bottomNavigationBar(size),
+          // bottomNavigationBar: _bottomNavigationBar(size),
           body: Container(
             color: backgroundColorLight,
             height: size.height,
@@ -87,7 +86,6 @@ class _HomePageState extends State<HomePage> {
                           ? Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PagoChinchinPage()))
                           : print("otro valor");
-
                       // Navigator.of(context).push(route);
                     },
                   ),
@@ -95,10 +93,18 @@ class _HomePageState extends State<HomePage> {
               }),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(18.0),
               child: Text("Actividades Recientes"),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: InkWell(
+                child: Text("Ver historial"),
+                onTap: () {},
+              ),
             )
           ],
         ),
@@ -159,28 +165,6 @@ class _HomePageState extends State<HomePage> {
               }),
         )
       ],
-    );
-  }
-
-  _bottomNavigationBar(Size size) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(60))),
-      height: size.height / 12,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.home)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.history)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.person)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.card_giftcard)),
-            ],
-          ),
-        ],
-      ),
     );
   }
 

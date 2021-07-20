@@ -20,15 +20,4 @@ class CustomToolbar extends StatelessWidget {
               )),
         ]));
   }
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
 }
