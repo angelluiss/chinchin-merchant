@@ -34,13 +34,13 @@ class _BodyRegisterState extends State<BodyRegister> {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-              hintText: "Email",
+              hintText: "Email o usuario",
             ),
             RoundedInputField(
-              hintText: "Password",
+              hintText: "Contraseña",
             ),
             RoundedInputField(
-              hintText: "Repeat Password",
+              hintText: "Repertir contraseña",
             ),
             SizedBox(height: size.height * 0.05),
             ButtonTheme(
@@ -51,7 +51,7 @@ class _BodyRegisterState extends State<BodyRegister> {
                   onPressed: () {},
                   color: primaryLightColor,
                   child: new Text(
-                    "Registro",
+                    "Registrar",
                     style: new TextStyle(
                         fontSize: size.width / 22,
                         color: Colors.white,

@@ -8,13 +8,15 @@ class AppBarWhiteGree extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return AppBar(
+      toolbarHeight: size.height / 6,
       flexibleSpace: Stack(
         children: [
-          Positioned(top: 20, right: 20, child: CircularPainterLeft()),
+          Positioned(top: 0, right: 0, child: CircularPainterLeft()),
           Positioned(
-              top: 50,
-              right: 20,
+              top: 10,
+              right: 10,
               child: Image.asset("assets/images/chinchin_icon_white.png"))
         ],
       ),

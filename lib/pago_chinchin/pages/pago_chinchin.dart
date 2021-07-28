@@ -41,7 +41,7 @@ class _PagoChinchinPageState extends State<PagoChinchinPage> {
                   ],
                 ),
                 RoundedInputField(
-                  hintText: "Numero de pedido",
+                  hintText: "Número de pedido",
                 ),
                 RoundedInputField(
                   hintText: "Monto del pedido en USD",

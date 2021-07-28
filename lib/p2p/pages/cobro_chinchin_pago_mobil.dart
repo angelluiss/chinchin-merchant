@@ -32,7 +32,7 @@ class _CobroP2PState extends State<CobroP2P> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 8, 8, 8),
-                      child: Text("Informacion Bancaria",
+                      child: Text("Información bancaria",
                           style: TextStyle(color: Colors.black45)),
                     ),
                   ],
@@ -45,6 +45,9 @@ class _CobroP2PState extends State<CobroP2P> {
                 ),
                 RoundedInputField(
                   hintText: "Monto a pagar",
+                ),
+                RoundedInputField(
+                  hintText: "CV o Rif",
                 ),
                 SizedBox(height: size.height * 0.05),
                 Padding(
@@ -112,10 +115,13 @@ class _CobroP2PState extends State<CobroP2P> {
     return AppBar(
         flexibleSpace: Stack(
           children: [
-            Positioned(top: 20, right: 20, child: CircularPainterLeft()),
             Positioned(
-                top: 50,
-                right: 20,
+                top: size.width / 20,
+                right: size.width / 20,
+                child: CircularPainterLeft()),
+            Positioned(
+                top: size.width / 20,
+                right: size.width / 20,
                 child: Image.asset("assets/images/chinchin_icon_white.png"))
           ],
         ),
@@ -126,7 +132,7 @@ class _CobroP2PState extends State<CobroP2P> {
             bottomRight: Radius.circular(90.0),
           ),
         ),
-        title: Text("Orden Pago Movil"),
+        title: Text("Orden pago móvil"),
         // actions: [Stack(child: Image.asset("assets/images/chinchin_icon_white.png"))],
         leading: IconButton(
             onPressed: () {

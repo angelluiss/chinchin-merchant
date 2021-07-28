@@ -1,4 +1,3 @@
-import 'package:chinchin_merchant/common/style/custom/circle_left_custom_paint.dart';
 import 'package:chinchin_merchant/common/widgets/app_bar/app_bar_white_green.dart';
 import 'package:chinchin_merchant/common/widgets/rounded_text_field_container.dart';
 import 'package:chinchin_merchant/p2p/pages/cobro_chinchin_pago_mobil.dart';
@@ -35,16 +34,16 @@ class _PagoMovilPageState extends State<PagoMovilPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 8, 8, 8),
-                      child: Text("Introducir Datos",
+                      child: Text("Introducir datos",
                           style: TextStyle(color: Colors.black45)),
                     ),
                   ],
                 ),
                 RoundedInputField(
-                  hintText: "Nuevo Pedido",
+                  hintText: "Nuevo pedido",
                 ),
                 RoundedInputField(
-                  hintText: "Monto de Pedido",
+                  hintText: "Monto de pedido",
                 ),
                 SizedBox(height: size.height * 0.05),
                 Padding(
@@ -59,7 +58,7 @@ class _PagoMovilPageState extends State<PagoMovilPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 8, 8, 8),
-                      child: Text("Informacion Bancaria",
+                      child: Text("Información bancaria",
                           style: TextStyle(color: Colors.black45)),
                     ),
                   ],
@@ -86,7 +85,7 @@ class _PagoMovilPageState extends State<PagoMovilPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Telefono",
+                      child: Text("Teléfono",
                           style: TextStyle(color: Colors.black45)),
                     ),
                     Padding(

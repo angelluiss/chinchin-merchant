@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CardData {
   final String name;
   final String date;
   final String number;
   final Color color;
-  final Icon image;
+  final SvgPicture? image;
+  final Image? imageAlter;
 
   CardData(
       {required this.name,
       required this.date,
       required this.number,
       required this.color,
-      required this.image});
+      this.image,
+      this.imageAlter});
 }
 
 List<CardData> cards = [
@@ -21,19 +24,19 @@ List<CardData> cards = [
       date: '12/26',
       number: '5262',
       color: Colors.white,
-      image: Icon(Icons.payment)),
+      image: SvgPicture.asset("assets/images/pay.svg")),
   CardData(
       name: 'Chinchin',
       date: '01/23',
       number: '5737',
       color: Colors.white,
-      image: Icon(Icons.smart_display_outlined)),
+      imageAlter: Image.asset("assets/images/chinchin_icon_white.png")),
   CardData(
       name: 'Cierre de lote',
       date: '07/24',
       number: '6315',
       color: Colors.white,
-      image: Icon(Icons.local_activity))
+      image: SvgPicture.asset("assets/images/pay.svg"))
 ];
 
 class LastInvestmentData {

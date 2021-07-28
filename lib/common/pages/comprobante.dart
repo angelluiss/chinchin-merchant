@@ -1,6 +1,7 @@
 import 'package:chinchin_merchant/utils/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ComprobantePage extends StatefulWidget {
   ComprobantePage({Key? key}) : super(key: key);
@@ -34,12 +35,11 @@ class _ComprobantePageState extends State<ComprobantePage> {
             },
             icon: Icon(Icons.arrow_back_ios)),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+          Expanded(
             child: Container(
-                margin: EdgeInsets.only(right: 10),
-                child:
-                    Image.asset("assets/images/logo_chinchin_solo_green.png")),
+                child: SvgPicture.asset(
+              "assets/images/logo_chinchin_solo_green.svg",
+            )),
           )
         ],
       ),

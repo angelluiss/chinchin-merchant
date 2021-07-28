@@ -1,15 +1,22 @@
 import 'dart:convert';
+import 'package:pointycastle/block/aes_fast.dart';
 import 'dart:typed_data';
-import "package:pointycastle/export.dart";
+import 'package:pointycastle/export.dart';
+import 'package:pointycastle/key_derivators/pbkdf2.dart';
+import 'package:pointycastle/paddings/pkcs7.dart';
+import 'package:pointycastle/pointycastle.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
-import "./convert_helper.dart";
+const KEY_SIZE = 32; // 32 byte key for AES-256
+const ITERATION_COUNT = 5;
+// const SALT = "hQboK8B@vY*rLp&I";
+// const INITIAL_VECTOR = "hQboK8B@vY*rLp&I";
+// const PASS_PHRASE = "YYYYYYYYYYYYYYYYYYY";
+// const PASS_PHRASE = "Kdu\$3KL921GcmKweSjv@lfp\$ksdn!jfhz#oPmfSeG&vgKiumj";
 
-// AES key size
-const KEY_SIZE = 16; // 16 byte key for AES-256
-const ITERATION_COUNT = 1000;
-
+///MARK: AesHelper class
 class AesHelper {
-  static const CBC_MODE = 'CBC';
+  static const CTR_MODE = 'CTR';
   static const CFB_MODE = 'CFB';
 
   static Uint8List deriveKey(dynamic password,
@@ -28,7 +35,7 @@ class AesHelper {
     Pbkdf2Parameters params =
         new Pbkdf2Parameters(saltBytes, iterationCount, derivedKeyLength);
     KeyDerivator keyDerivator =
-        new PBKDF2KeyDerivator(new HMac(new SHA256Digest(), 16));
+        new PBKDF2KeyDerivator(new HMac(new SHA256Digest(), 64));
     keyDerivator.init(params);
 
     return keyDerivator.process(password);
@@ -55,81 +62,35 @@ class AesHelper {
     return new Uint8List(len)..setRange(0, len, src);
   }
 
-  static String encrypt(String password, String plaintext,
-      {String mode = CBC_MODE}) {
-    Uint8List derivedKey = deriveKey(password);
-    KeyParameter keyParam = new KeyParameter(derivedKey);
-    BlockCipher aes = new AESFastEngine();
+  static String decrypt(String cipher, String password, Uint8List iv) {
+    final encryptedText = encrypt.Encrypted.fromBase16(cipher);
 
-    var rnd = FortunaRandom();
-    rnd.seed(keyParam);
-    Uint8List iv = rnd.nextBytes(aes.blockSize);
+    Uint8List keysfd = deriveKey(password);
+    final ctr = CTRStreamCipher(AESFastEngine())
+      ..init(false, ParametersWithIV(KeyParameter(keysfd), iv));
+    Uint8List decrypted = ctr.process(encryptedText.bytes);
 
-    BlockCipher cipher;
-    ParametersWithIV params = new ParametersWithIV(keyParam, iv);
-    switch (mode) {
-      case CBC_MODE:
-        cipher = new CBCBlockCipher(aes);
-        break;
-      case CFB_MODE:
-        cipher = new CFBBlockCipher(aes, aes.blockSize);
-        break;
-      default:
-        throw new ArgumentError('incorrect value of the "mode" parameter');
-    }
-    cipher.init(true, params);
+    print(String.fromCharCodes(decrypted));
 
-    Uint8List textBytes = createUint8ListFromString(plaintext);
-    Uint8List paddedText = pad(textBytes, aes.blockSize);
-    Uint8List cipherBytes = _processBlocks(cipher, paddedText);
-    Uint8List cipherIvBytes = new Uint8List(cipherBytes.length + iv.length)
-      ..setAll(0, iv)
-      ..setAll(iv.length, cipherBytes);
-
-    return base64.encode(cipherIvBytes);
+    return String.fromCharCodes(decrypted);
   }
+}
 
-  static String decrypt(String password, String ciphertext,
-      {String mode = CBC_MODE}) {
-    Uint8List derivedKey = deriveKey(password);
-    KeyParameter keyParam = new KeyParameter(derivedKey);
-    BlockCipher aes = new AESFastEngine();
+///MARK: HELPERS
+Uint8List createUint8ListFromString(String s) {
+  Uint8List ret = Uint8List.fromList(s.codeUnits);
 
-    Uint8List cipherIvBytes = base64.decode(ciphertext);
-    Uint8List iv = new Uint8List(aes.blockSize)
-      ..setRange(0, aes.blockSize, cipherIvBytes);
+  return ret;
+}
 
-    BlockCipher cipher;
-    ParametersWithIV params = new ParametersWithIV(keyParam, iv);
-    switch (mode) {
-      case CBC_MODE:
-        cipher = new CBCBlockCipher(aes);
-        break;
-      case CFB_MODE:
-        cipher = new CFBBlockCipher(aes, aes.blockSize);
-        break;
-      default:
-        throw new ArgumentError('incorrect value of the "mode" parameter');
-    }
-    cipher.init(false, params);
+String toUtf8(value) {
+  var encoded = utf8.encode(value);
+  var decoded = utf8.decode(encoded);
+  return decoded;
+}
 
-    int cipherLen = cipherIvBytes.length - aes.blockSize;
-    Uint8List cipherBytes = new Uint8List(cipherLen)
-      ..setRange(0, cipherLen, cipherIvBytes, aes.blockSize);
-    Uint8List paddedText = _processBlocks(cipher, cipherBytes);
-    Uint8List textBytes = unpad(paddedText);
-
-    return new String.fromCharCodes(textBytes);
-  }
-
-  static Uint8List _processBlocks(BlockCipher cipher, Uint8List inp) {
-    var out = new Uint8List(inp.lengthInBytes);
-
-    for (var offset = 0; offset < inp.lengthInBytes;) {
-      var len = cipher.processBlock(inp, offset, out, offset);
-      offset += len;
-    }
-
-    return out;
-  }
+String toASCII(value) {
+  var encoded = ascii.encode(value);
+  var decoded = ascii.decode(encoded);
+  return decoded;
 }

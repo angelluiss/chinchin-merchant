@@ -1,13 +1,13 @@
 {
   "app_name": "Zoom Drawer",
-  "payment": "Pago Movil",
+  "payment": "Pago Móvil",
   "promos": "Chinchin",
   "notifications": "Cierre de lote",
-  "help": "Help",
-  "about_us": "About Us",
+  "help": "Ayuda",
+  "about_us": "¿Quiénes somos?",
   "rate_us": "Rate Us",
   "page": "Page",
   "current": "Current Page",
   "name": "Adan Balina",
-  "logout": "Logout"
+  "logout": "Cerrar sesión"
 }

@@ -22,7 +22,7 @@ class Background extends StatelessWidget {
               child: Container(
                   child: Column(
                 children: [
-                  Container(child: Text("Chinchin")),
+                  // Container(child: Text("Chinchin")),
                 ],
               ))),
           child,

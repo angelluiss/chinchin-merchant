@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final isRtl = context.locale.languageCode == "es";
     return ZoomDrawer(
       controller: _drawerController,
-      style: DrawerStyle.Style1,
+      style: DrawerStyle.Style4,
       menuScreen: MenuScreen(
         HomeScreen.mainMenu,
         callback: _updatePage,

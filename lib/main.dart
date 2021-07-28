@@ -1,7 +1,9 @@
+import 'package:chinchin_merchant/common/pages/route_page.dart';
 import 'package:chinchin_merchant/common/providers/dark_theme_provider.dart';
 import 'package:chinchin_merchant/common/style/theme_style.dart';
 
 import 'package:chinchin_merchant/login_registro/pages/login.dart';
+import 'package:chinchin_merchant/utils/routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -53,12 +55,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateTitle: (context) => tr("app_name"),
+        onGenerateRoute: Routers.generateRoute,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: Styles.themeData(themeChangeProvider.darkTheme, context),
         home: SplashScreenView(
-          navigateRoute: LoginPage(),
+          navigateRoute: RoutePage(),
           duration: 3000,
           imageSize: 130,
           imageSrc: "assets/images/logo_chinchin.png",

@@ -10,6 +10,11 @@ const secondaryLightColor = Color(0xFFF8F8F8);
 
 const version_app = "1.0.0";
 
+// Rutas =====
+
+const String homeRoute = '/';
+const String loginRoute = 'login';
+
 // URL's =====
 
 // Texto ======

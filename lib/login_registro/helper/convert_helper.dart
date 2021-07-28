@@ -1,88 +1,36 @@
-import "dart:typed_data";
-import 'dart:convert';
-import 'package:convert/convert.dart' as convert;
+// import 'dart:convert';
 
-Uint8List createUint8ListFromString(String s) {
-  var ret = new Uint8List(s.length);
-  for (var i = 0; i < s.length; i++) {
-    ret[i] = s.codeUnitAt(i);
+// import 'package:encrypt/encrypt.dart';
+// import 'package:pointycastle/block/aes_fast.dart';
+
+// import 'package:pointycastle/export.dart';
+// import 'package:pointycastle/pointycastle.dart';
+
+import 'dart:typed_data';
+
+import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:pointycastle/export.dart' as pc;
+
+class AesHelper2 {
+  String decrypt(String cipher, Uint8List key, Uint8List iv) {
+    final encryptedText = encrypt.Encrypted.fromBase16(cipher);
+    final ctr = pc.CTRStreamCipher(pc.AESFastEngine())
+      ..init(false, pc.ParametersWithIV(pc.KeyParameter(key), iv));
+    Uint8List decrypted = ctr.process(encryptedText.bytes);
+
+    print(String.fromCharCodes(decrypted));
+
+    return String.fromCharCodes(decrypted);
   }
-  return ret;
-}
+  // final key1 = Key.fromBase16(password); //32 length
+  // final iv1 = IV.fromLength(16);
+  // final encryptedText = Encrypted.fromBase64(
+  //     "03fb3a95e2cb4653adeb2216fd474971cd12e03cb8ff5de2e8dc15f13114ea0d9902c0954d3d7cf36ad129bd7487c5d8b27cd219cef59577d33d082de0ea1e47534ee1253f26a61accb346668ff984eb965d6fff6dd6311a9228795e8a03887ad54db03cd8637c3a6f35975d9aaae3f280d637da6e4c6cb7e08d46b7a11f28b9face8e83abcd4dfce8eafce3c06152eb06e1626f1a7625fb7f0372d442cc");
+  // final ctr = CTRStreamCipher(AESFastEngine())
+  //   ..init(false, ParametersWithIV(KeyParameter(key1.bytes), iv1.bytes));
+  // final decrypted3 = ctr.process(encryptedText.bytes);
+  // final decryptedData = utf8.decode(decrypted3);
+  // print("DAta Decrypted: $decryptedData");
+  // return decryptedData;
 
-Uint8List createUint8ListFromHexString(String hex) {
-  var result = new Uint8List(hex.length ~/ 2);
-  for (var i = 0; i < hex.length; i += 2) {
-    var num = hex.substring(i, i + 2);
-    var byte = int.parse(num, radix: 16);
-    result[i ~/ 2] = byte;
-  }
-  return result;
-}
-
-Uint8List createUint8ListFromSequentialNumbers(int len) {
-  var ret = new Uint8List(len);
-  for (var i = 0; i < len; i++) {
-    ret[i] = i;
-  }
-  return ret;
-}
-
-String formatBytesAsHexString(Uint8List bytes) {
-  var result = new StringBuffer();
-  for (var i = 0; i < bytes.lengthInBytes; i++) {
-    var part = bytes[i];
-    result.write('${part < 16 ? '0' : ''}${part.toRadixString(16)}');
-  }
-  return result.toString();
-}
-
-List<int> decodePEM(String pem) {
-  var startsWith = [
-    "-----BEGIN PUBLIC KEY-----",
-    "-----BEGIN PRIVATE KEY-----",
-    "-----BEGIN ENCRYPTED MESSAGE-----",
-    "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
-    "-----BEGIN PGP PRIVATE KEY BLOCK-----\r\nVersion: React-Native-OpenPGP.js 0.1\r\nComment: http://openpgpjs.org\r\n\r\n",
-  ];
-  var endsWith = [
-    "-----END PUBLIC KEY-----",
-    "-----END PRIVATE KEY-----",
-    "-----END ENCRYPTED MESSAGE-----",
-    "-----END PGP PUBLIC KEY BLOCK-----",
-    "-----END PGP PRIVATE KEY BLOCK-----",
-  ];
-  bool isOpenPgp = pem.indexOf('BEGIN PGP') != -1;
-
-  for (var s in startsWith) {
-    if (pem.startsWith(s)) {
-      pem = pem.substring(s.length);
-    }
-  }
-
-  for (var s in endsWith) {
-    if (pem.endsWith(s)) {
-      pem = pem.substring(0, pem.length - s.length);
-    }
-  }
-
-  if (isOpenPgp) {
-    var index = pem.indexOf('\r\n');
-    pem = pem.substring(0, index);
-  }
-
-  pem = pem.replaceAll('\n', '');
-  pem = pem.replaceAll('\r', '');
-
-  return base64.decode(pem);
-}
-
-List<int> decodeHex(String hex) {
-  hex = hex
-      .replaceAll(':', '')
-      .replaceAll('\n', '')
-      .replaceAll('\r', '')
-      .replaceAll('\t', '');
-
-  return convert.hex.decode(hex);
 }

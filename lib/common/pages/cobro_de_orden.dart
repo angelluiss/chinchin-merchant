@@ -44,7 +44,7 @@ class _CobrodeOrdenState extends State<CobrodeOrden> {
                       padding: const EdgeInsets.all(8),
                       child: Text("\$ 20,00",
                           style:
-                              TextStyle(fontSize: 40, color: Colors.black45)),
+                              TextStyle(fontSize: 30, color: Colors.black45)),
                     ),
                   ],
                 ),
@@ -55,7 +55,7 @@ class _CobrodeOrdenState extends State<CobrodeOrden> {
                       padding: const EdgeInsets.all(8),
                       child: Text("\$ 20,00",
                           style: TextStyle(
-                              fontSize: 40, color: primaryLightColor)),
+                              fontSize: 30, color: primaryLightColor)),
                     ),
                   ],
                 ),
@@ -131,12 +131,13 @@ class _CobrodeOrdenState extends State<CobrodeOrden> {
 
   _appBarGreen(Size size) {
     return AppBar(
+        toolbarHeight: size.height / 6,
         flexibleSpace: Stack(
           children: [
-            Positioned(top: 20, right: 20, child: CircularPainterLeft()),
+            Positioned(top: 0, right: 0, child: CircularPainterLeft()),
             Positioned(
-                top: 50,
-                right: 20,
+                top: 10,
+                right: 10,
                 child: Image.asset("assets/images/chinchin_icon_white.png"))
           ],
         ),

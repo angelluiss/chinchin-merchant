@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chinchin_merchant/home/screen/home_screen.dart';
 import 'package:chinchin_merchant/utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,16 +42,16 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              primaryLightColor,
-              Colors.white70,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        decoration: BoxDecoration(color: primaryLightColor
+            // gradient: LinearGradient(
+            //   colors: [
+            //     primaryLightColor,
+            //     Colors.white70,
+            //   ],
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomRight,
+            // ),
+            ),
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -101,24 +102,13 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                child: OutlinedButton(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      tr("logout"),
-                      style: TextStyle(fontSize: 18, color: Colors.black54),
-                    ),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Colors.white, width: 2.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0)),
-                    textStyle: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () => print("Pressed!"),
-                ),
+              MenuItemWidget(
+                key: Key(8.toString()),
+                item: MenuItem(tr("logout"), Icons.close, 4),
+                callback: widget.callback,
+                widthBox: widthBox,
+                style: style,
+                selected: false,
               ),
               Spacer(),
             ],

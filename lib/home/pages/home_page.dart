@@ -2,6 +2,7 @@ import 'package:chinchin_merchant/common/pages/comprobante.dart';
 
 import 'package:chinchin_merchant/home/models/card_model.dart';
 import 'package:chinchin_merchant/home/widgets/card_design.dart';
+import 'package:chinchin_merchant/home/widgets/card_list.dart';
 
 import 'package:chinchin_merchant/p2p/pages/pago_movil.dart';
 import 'package:chinchin_merchant/pago_chinchin/pages/pago_chinchin.dart';
@@ -36,15 +37,21 @@ class _HomePageState extends State<HomePage> {
           appBar: _appBarGreen(size),
           // bottomNavigationBar: _bottomNavigationBar(size),
           body: Container(
-            color: backgroundColorLight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              color: backgroundColorLight,
+            ),
             height: size.height,
             child: _homeWidget(context, size),
           ),
         ),
+        onTap: () {
+          // ZoomDrawer.of(context)!.toggle();
+        },
         onPanUpdate: (details) {
-          if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
-            ZoomDrawer.of(context)!.toggle();
-          }
+          // if (details.delta.dx < 6 && !rtl || details.delta.dx < -6 && rtl) {
+          ZoomDrawer.of(context)!.toggle();
+          // }
         },
       ),
     );
@@ -62,42 +69,42 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        // CardList(),
-        Expanded(
-          flex: 1,
-          child: ListView.builder(
-              // shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: cards.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    child: CardDesign(
-                      card: cards[index],
-                    ),
-                    onTap: () {
-                      print("Seleccionaste $index");
-                      index == 0
-                          ? Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PagoMovilPage()))
-                          : print("otro valor");
-                      index == 1
-                          ? Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PagoChinchinPage()))
-                          : print("otro valor");
-                      // Navigator.of(context).push(route);
-                    },
-                  ),
-                );
-              }),
-        ),
+        Expanded(child: CardList()),
+        // Expanded(
+        //   flex: 1,
+        //   child: ListView.builder(
+        //       // shrinkWrap: true,
+        //       scrollDirection: Axis.horizontal,
+        //       itemCount: cards.length,
+        //       itemBuilder: (context, index) {
+        //         return Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: InkWell(
+        //             child: CardDesign(
+        //               card: cards[index],
+        //             ),
+        //             onTap: () {
+        //               print("Seleccionaste $index");
+        //               index == 0
+        //                   ? Navigator.of(context).push(MaterialPageRoute(
+        //                       builder: (context) => PagoMovilPage()))
+        //                   : print("otro valor");
+        //               index == 1
+        //                   ? Navigator.of(context).push(MaterialPageRoute(
+        //                       builder: (context) => PagoChinchinPage()))
+        //                   : print("otro valor");
+        //               // Navigator.of(context).push(route);
+        //             },
+        //           ),
+        //         );
+        //       }),
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Text("Actividades Recientes"),
+              child: Text("Actividades recientes"),
             ),
             Padding(
               padding: const EdgeInsets.all(18.0),

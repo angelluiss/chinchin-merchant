@@ -1,6 +1,7 @@
 import 'package:chinchin_merchant/historial/pages/history.dart';
 import 'package:chinchin_merchant/home/screen/home_screen.dart';
 import 'package:chinchin_merchant/p2p/pages/pago_movil.dart';
+import 'package:chinchin_merchant/utils/constants.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class _PageViewverState extends State<PageViewver>
   _onPageChanged(int index) {
     setState(() {
       _selectedIndex = index;
+      print(index);
     });
   }
 
@@ -69,6 +71,18 @@ class _PageViewverState extends State<PageViewver>
   }
 
   _bottomNavigationBar(Size size) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.white;
+      }
+      return Colors.white;
+    }
+
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -79,26 +93,59 @@ class _PageViewverState extends State<PageViewver>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                  onPressed: () {
-                    _onItemTapped(0);
-                  },
-                  icon: Icon(Icons.home)),
-              IconButton(
-                  onPressed: () {
-                    _onItemTapped(1);
-                  },
-                  icon: Icon(Icons.history)),
-              IconButton(
-                  onPressed: () {
-                    _onItemTapped(2);
-                  },
-                  icon: Icon(Icons.person)),
-              IconButton(
-                  onPressed: () {
-                    _onItemTapped(3);
-                  },
-                  icon: Icon(Icons.card_giftcard)),
+              InkWell(
+                overlayColor: MaterialStateProperty.resolveWith(getColor),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.home,
+                    color:
+                        _selectedIndex == 0 ? primaryLightColor : Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  _onItemTapped(0);
+                },
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.history,
+                    color:
+                        _selectedIndex == 1 ? primaryLightColor : Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  _onItemTapped(1);
+                },
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.person,
+                    color:
+                        _selectedIndex == 2 ? primaryLightColor : Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  _onItemTapped(2);
+                },
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.card_giftcard,
+                    color:
+                        _selectedIndex == 3 ? primaryLightColor : Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  _onItemTapped(3);
+                },
+              )
             ],
           ),
         ],
